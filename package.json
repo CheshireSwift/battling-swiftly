@@ -4,20 +4,37 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "parcel build index.html",
+    "dev": "concurrently -n build,types,tests -c magenta,cyan,green npm:watch-build npm:watch-types npm:watch-tests",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "watch-build": "parcel serve index.html",
+    "watch-types": "tsc --noEmit --watch --preserveWatchOutput",
+    "watch-tests": "jest --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "parcel-bundler": "^1.12.3",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "typescript": "^3.4.2"
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.11",
+    "@types/jsdom": "^12.2.3",
     "@types/ramda": "^0.26.6",
     "@types/react": "^16.8.12",
-    "@types/react-dom": "^16.8.3"
+    "@types/react-dom": "^16.8.3",
+    "concurrently": "^4.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "jest": "^24.7.1",
+    "jest-environment-jsdom": "^24.7.1",
+    "jest-environment-jsdom-global": "^1.2.0",
+    "parcel-bundler": "^1.12.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.2"
   }
 }

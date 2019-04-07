@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-export function useEventValue<T>(
+export function useEventValue<E extends Event, T>(
   eventType: string,
-  valueForEvent: (e: Event) => T,
+  valueForEvent: (e: E) => T,
 ) {
   const [value, setValue] = useState<T>(null)
 
-  function handleEvent(e: Event) {
+  function handleEvent(e: E) {
     setValue(valueForEvent(e))
   }
 

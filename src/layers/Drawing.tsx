@@ -1,57 +1,46 @@
 import * as React from 'react'
 import { layerStyle } from '../helpers/styleSnippets'
 import { useEventValue } from '../helpers/hooks'
+import { Vector } from '../helpers/vector'
 
-type Point = { x: number; y: number }
 type DrawingProps = {
   dimensions: { height: number; width: number }
 }
 
-const pointFromEvent = (e: { pageX: number; pageY: number }): Point => ({
-  x: e.pageX,
-  y: e.pageY,
-})
+const pointFromEvent = (e: { pageX: number; pageY: number }) =>
+  new Vector(e.pageX, e.pageY)
 
 export const Drawing = ({ dimensions }: DrawingProps) => {
-  const [start, setStart] = React.useState<Point | null>(null)
-  const [end, setEnd] = React.useState<Point | null>(null)
-  const mousePos = useEventValue('mousemove', (e: MouseEvent) => ({
-    x: e.pageX,
-    y: e.pageY,
-  }))
+  const [start, setStart] = React.useState<Vector | null>(null)
+  const [end, setEnd] = React.useState<Vector | null>(null)
+  const mousePos = useEventValue<MouseEvent, Vector>(
+    'mousemove',
+    pointFromEvent,
+  )
 
   const endToUse = end || mousePos
 
+  const toolClick = (e: React.MouseEvent) => {
+    const point = pointFromEvent(e)
+    if (start && !end) {
+      setEnd(point)
+    } else {
+      setStart(point)
+      setEnd(null)
+    }
+  }
+
   return (
-    <svg
-      style={{ ...layerStyle, ...dimensions }}
-      onClick={e => {
-        const point = pointFromEvent(e)
-        if (start && !end) {
-          setEnd(point)
-        } else {
-          setStart(point)
-          setEnd(null)
-        }
-      }}
-    >
+    <svg style={{ ...layerStyle, ...dimensions }} onClick={toolClick}>
       {start && (
         <>
           <line
-            x1={start.x}
-            y1={start.y}
-            x2={endToUse.x}
-            y2={endToUse.y}
+            {...start.suffix('1')}
+            {...endToUse.suffix('2')}
             stroke="lime"
           />
-          <text x={endToUse.x} y={endToUse.y} fill="lime">
-            {Math.round(
-              Math.sqrt(
-                Math.pow(endToUse.x - start.x, 2) +
-                  Math.pow(endToUse.y - start.y, 2),
-              ),
-            ) / 100}
-            "
+          <text {...endToUse} fill="lime">
+            {(endToUse.difference(start).length() / 100).toFixed(1)}"
           </text>
         </>
       )}
