@@ -1,0 +1,23 @@
+{
+  "name": "battling-swiftly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel-bundler": "^1.12.3",
+    "ramda": "^0.26.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "typescript": "^3.4.2"
+  },
+  "devDependencies": {
+    "@types/ramda": "^0.26.6",
+    "@types/react": "^16.8.12",
+    "@types/react-dom": "^16.8.3"
+  }
+}
