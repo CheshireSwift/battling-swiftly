@@ -1,30 +1,25 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import QueryString from './helpers/QueryString'
+import queryStringData from './helpers/queryStringData'
 import Background from './layers/Background'
 import { Toolbox, Tool } from './layers/Toolbox'
 import Drawing from './layers/Drawing'
-
-interface QueryStringData {
-  bg: string
-}
 
 const App = () => {
   const [imageDimensions, setImageDimensions] = React.useState({
     height: 0,
     width: 0,
   })
+  const [selectedTool, setSelectedTool] = React.useState(Tool.Measure)
+
+  const query = queryStringData<{ bg: string }>({ valueKeys: ['bg'] })
+
   return (
-    <QueryString<QueryStringData> valueKeys={['bg']}>
-      {query => (
-        <>
-          <Background url={query.bg} onLoadDimensions={setImageDimensions} />
-          <Drawing dimensions={imageDimensions} />
-          <Toolbox selectedTool={Tool.Measure} />
-        </>
-      )}
-    </QueryString>
+    <>
+      <Background url={query.bg} onLoadDimensions={setImageDimensions} />
+      <Drawing dimensions={imageDimensions} dpi={100} />
+    </>
   )
 }
 

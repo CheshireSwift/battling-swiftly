@@ -15,6 +15,7 @@ enum ToolboxLocation {
 
 type ToolboxProps = {
   selectedTool: Tool
+  onSelectTool: (tool: Tool) => void
 }
 
 const cornerStyles: { [corner in ToolboxLocation]: React.CSSProperties } = {
@@ -44,11 +45,26 @@ const cornerStyles: { [corner in ToolboxLocation]: React.CSSProperties } = {
   },
 }
 
-export const Toolbox = ({ selectedTool }: ToolboxProps) => {
+export const Toolbox = ({ selectedTool, onSelectTool }: ToolboxProps) => {
   const [location, setLocation] = React.useState(ToolboxLocation.BL)
 
+  const handleClick = (e: React.MouseEvent) => {
+    console.log('clicky')
+    e.preventDefault()
+  }
+
   return (
-    <div style={{ ...layerStyle, position: 'fixed', pointerEvents: 'none' }}>
+    <div
+      style={{
+        ...layerStyle,
+        position: 'fixed',
+        pointerEvents: 'none',
+        width: '100%',
+        height: '100vh',
+      }}
+      onContextMenu={handleClick}
+      onContextMenuCapture={handleClick}
+    >
       {[
         ToolboxLocation.TL,
         ToolboxLocation.TR,
