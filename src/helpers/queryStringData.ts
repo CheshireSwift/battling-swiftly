@@ -1,14 +1,16 @@
-import { mergeAll } from 'ramda'
+import * as _ from 'lodash'
 
-const pairsByMappingKeys = (arr: string[], f: (key: string) => string) =>
-  arr ? arr.map(key => ({ [key]: f(key) })) : []
+const pairsByMappingKeys = <T>(
+  arr: Array<keyof T>,
+  f: (key: keyof T) => string,
+) => (arr ? arr.map(key => [key, f(key)] as [keyof T, string]) : [])
 
 export default function queryStringData<T>({
   valueKeys = [],
   arrayKeys = [],
 }: {
-  valueKeys?: string[]
-  arrayKeys?: string[]
+  valueKeys?: Array<keyof T>
+  arrayKeys?: Array<keyof T>
 }): Partial<T> {
   const urlParams = new URLSearchParams(window.location.search)
   const urlParamsGet = urlParams.get.bind(urlParams)
@@ -17,6 +19,6 @@ export default function queryStringData<T>({
   const values = pairsByMappingKeys(valueKeys, urlParamsGet)
   const arrays = pairsByMappingKeys(arrayKeys, urlParamsGetAll)
 
-  const results: unknown = mergeAll([...values, ...arrays])
+  const results: unknown = _.fromPairs([...values, ...arrays])
   return results as Partial<T>
 }
