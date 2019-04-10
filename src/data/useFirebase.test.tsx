@@ -15,7 +15,7 @@ describe('firebase hook', () => {
     }
 
     const MyComponent = () => {
-      const { snapshot } = useFirebase(mockCollectionRef)
+      const snapshot = useFirebase(mockCollectionRef)
       return <div>{snapshot}</div>
     }
 
@@ -39,7 +39,7 @@ describe('firebase hook', () => {
     }
 
     const MyComponent = () => {
-      const { snapshot } = useFirebase(mockCollectionRef)
+      const snapshot = useFirebase(mockCollectionRef)
       return <div>{snapshot}</div>
     }
 

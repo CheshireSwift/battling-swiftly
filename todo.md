@@ -2,7 +2,7 @@
 
 ## MVP
 
-- [ ] Shared movement
+- [x] Shared movement
 - [ ] Individual character control
 
 ## Non-essential but important

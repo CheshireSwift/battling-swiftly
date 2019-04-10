@@ -77,7 +77,7 @@ const App = () => {
 
   const dpi = parseInt(query.dpi)
 
-  const { snapshot } = useFirebase(
+  const snapshot = useFirebase(
     firebase
       .app()
       .firestore()

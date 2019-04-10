@@ -2,7 +2,6 @@ import * as React from 'react'
 import { mount, render } from 'enzyme'
 
 import Drawing from './Drawing'
-import { Vector } from '../helpers/vector'
 
 describe('the drawing layer', () => {
   it('allows rangefinding', () => {

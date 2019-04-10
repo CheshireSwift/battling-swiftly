@@ -3,10 +3,7 @@ import * as React from 'react'
 export const useFirebase = <T extends any>(collectionRef: {
   get: () => Promise<T>
   onSnapshot: (handler: (snapshot: T) => void) => () => void
-}): {
-  snapshot: T | undefined
-  updateDocument: (key: string, data: Partial<T>) => void
-} => {
+}): T | undefined => {
   const [snapshot, setSnapshot] = React.useState<T>()
   React.useEffect(() => {
     collectionRef.get().then(setSnapshot)
@@ -14,7 +11,7 @@ export const useFirebase = <T extends any>(collectionRef: {
     return cancelListener
   }, [collectionRef])
 
-  return { snapshot, updateDocument: () => {} }
+  return snapshot
 }
 
 export default useFirebase
