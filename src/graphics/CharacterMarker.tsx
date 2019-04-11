@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Vector } from '../helpers/vector'
+import { Vector } from '../helpers/Vector'
 
 export type Character = {
   name: string
