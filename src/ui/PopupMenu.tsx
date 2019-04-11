@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Vector } from '../helpers/vector'
+import { Vector } from '../helpers/Vector'
 
 type PopupMenuProps<T> = {
   position: { top: number; left: number } | Vector | null
