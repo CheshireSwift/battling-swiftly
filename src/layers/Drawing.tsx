@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { layerStyle } from '../helpers/styleSnippets'
 import { useEventValue } from '../helpers/hooks'
-import { Vector } from '../helpers/vector'
+import { Vector } from '../helpers/Vector'
 import PopupMenu from '../ui/PopupMenu'
 import Tool from '../data/Tool'
 
