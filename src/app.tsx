@@ -55,12 +55,8 @@ const App = () => {
     width: 0,
   })
 
-  const query = queryStringData<{
-    bg: string
-    dpi: string
-    collection: string
-  }>({
-    valueKeys: ['bg', 'dpi', 'collection'],
+  const query = queryStringData({
+    valueKeys: ['bg', 'dpi', 'collection', 'char'],
   })
 
   if (!query.bg) {
@@ -77,31 +73,33 @@ const App = () => {
 
   const dpi = parseInt(query.dpi)
 
-  const snapshot = useFirebase(
-    firebase
-      .app()
-      .firestore()
-      .collection(query.collection),
-  )
+  const collection = firebase
+    .app()
+    .firestore()
+    .collection(query.collection)
+
+  const snapshot = useFirebase(collection)
 
   if (!snapshot) {
     return <div>Could not find collection {query.collection}</div>
   }
 
-  const characters = snapshot.docs.map(doc => doc.data() as Character)
+  const characters = snapshot.docs.map(
+    doc => ({ key: doc.id, ...doc.data() } as Character),
+  )
 
   return (
     <>
       <Background url={query.bg} onLoadDimensions={setImageDimensions} />
-      <Drawing dimensions={imageDimensions} dpi={dpi}>
-        {characters.map(character => (
-          <CharacterMarker
-            key={character.name}
-            character={character}
-            dpi={dpi}
-          />
-        ))}
-      </Drawing>
+      <Drawing
+        dimensions={imageDimensions}
+        dpi={dpi}
+        controlledCharacterKey={query.char}
+        characters={characters}
+        update={(key, data) => {
+          collection.doc(key).update(data)
+        }}
+      />
     </>
   )
 }

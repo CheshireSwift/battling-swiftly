@@ -4,7 +4,7 @@ import { Vector } from '../helpers/Vector'
 
 type PopupMenuProps<T> = {
   position: { top: number; left: number } | Vector | null
-  menuItems: Array<[T, React.ReactNode]>
+  menuItems: Array<[T, React.ReactNode] | null | undefined | false | '' | 0>
   selectedItem?: T
   onSelectItem?: (key: T) => void
 }
@@ -21,9 +21,10 @@ export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
         ...coerceVector(props.position),
       }}
     >
-      {props.menuItems.map(([key, value]) => (
+      {_.compact(props.menuItems).map(([key, value]) => (
         <div
           key={key.toString()}
+          id={'popup-menu-item-' + key}
           style={{
             border: props.selectedItem === key ? '1px solid lime' : 'none',
             background: 'gray',

@@ -1,5 +1,7 @@
 import * as _ from 'lodash'
 
+type StringDict<T> = { [P in keyof T]?: string }
+
 const pairsByMappingKeys = <T>(
   arr: Array<keyof T>,
   f: (key: keyof T) => string,
@@ -11,7 +13,7 @@ export default function queryStringData<T>({
 }: {
   valueKeys?: Array<keyof T>
   arrayKeys?: Array<keyof T>
-}): Partial<T> {
+}): StringDict<T> {
   const urlParams = new URLSearchParams(window.location.search)
   const urlParamsGet = urlParams.get.bind(urlParams)
   const urlParamsGetAll = urlParams.getAll.bind(urlParams)
@@ -20,5 +22,5 @@ export default function queryStringData<T>({
   const arrays = pairsByMappingKeys(arrayKeys, urlParamsGetAll)
 
   const results: unknown = _.fromPairs([...values, ...arrays])
-  return results as Partial<T>
+  return results as StringDict<T>
 }

@@ -27,12 +27,20 @@ export class Vector {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
   }
 
-  normalize(xMult: number = 1, yMult: number = 1): Vector {
+  normalize(xMult: number = 1, yMult?: number): Vector {
+    if (yMult == null) {
+      yMult = xMult
+    }
+
     const length = this.length()
 
     return length === 0
       ? new Vector(0, 0)
       : new Vector((this.x * xMult) / length, (this.y * yMult) / length)
+  }
+
+  cap(maxLength: number): Vector {
+    return this.length() > maxLength ? this.normalize(maxLength) : this
   }
 
   multiply(mult: number): Vector {
@@ -41,6 +49,10 @@ export class Vector {
 
   toStyle() {
     return { top: this.y, left: this.x }
+  }
+
+  toXY() {
+    return { x: this.x, y: this.y }
   }
 
   prefix(prefix: string) {

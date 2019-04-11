@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Vector } from '../helpers/Vector'
 
 export type Character = {
+  key: string
   name: string
   position: { x: number; y: number }
   color?: string
@@ -10,17 +11,19 @@ export type Character = {
 export const CharacterMarker = ({
   character,
   dpi,
+  highlight,
 }: {
   character: Character
   dpi: number
+  highlight?: boolean
 }) => {
-  const [radii, setRadii] = React.useState(false)
+  const [hover, setHover] = React.useState(false)
   const hoverHandlers = {
     onMouseEnter: () => {
-      setRadii(true)
+      setHover(true)
     },
     onMouseLeave: () => {
-      setRadii(false)
+      setHover(false)
     },
   }
 
@@ -28,28 +31,29 @@ export const CharacterMarker = ({
   const offsetPosition = position.add(new Vector(15, -15))
   const color = character.color || 'lime'
 
-  return (
+  const radiusCircles = (highlight || hover) && (
     <>
-      {radii && (
-        <>
-          <circle
-            {...position.prefix('c')}
-            r={6 * dpi}
-            stroke={color}
-            strokeWidth="0.5"
-            fill={color}
-            fillOpacity="0.1"
-          />
-          <circle
-            {...position.prefix('c')}
-            r={1 * dpi}
-            stroke={color}
-            strokeWidth="0.5"
-            fill={color}
-            fillOpacity="0.2"
-          />
-        </>
-      )}
+      <circle
+        {...position.prefix('c')}
+        r={6 * dpi}
+        stroke={color}
+        strokeWidth="0.5"
+        fill={color}
+        fillOpacity="0.1"
+      />
+      <circle
+        {...position.prefix('c')}
+        r={1 * dpi}
+        stroke={color}
+        strokeWidth="0.5"
+        fill={color}
+        fillOpacity="0.2"
+      />
+    </>
+  )
+
+  const mapHandle = (
+    <>
       <circle
         {...position.prefix('c')}
         r="4"
@@ -69,14 +73,25 @@ L ${offsetPosition.x},${offsetPosition.y + 2}
 L ${offsetPosition.x + character.name.length * 6},${offsetPosition.y + 2}
     `}
       />
-      <text
-        {...offsetPosition}
-        fill={color}
-        style={{ fontFamily: 'monospace', fontWeight: 'bold' }}
-        {...hoverHandlers}
-      >
-        {character.name}
-      </text>
+    </>
+  )
+
+  const nameText = (
+    <text
+      {...offsetPosition}
+      fill={color}
+      style={{ fontFamily: 'monospace', fontWeight: 'bold' }}
+      {...hoverHandlers}
+    >
+      {character.name}
+    </text>
+  )
+
+  return (
+    <>
+      {radiusCircles}
+      {mapHandle}
+      {nameText}
     </>
   )
 }

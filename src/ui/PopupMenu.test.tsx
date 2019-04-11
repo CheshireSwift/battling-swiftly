@@ -62,4 +62,15 @@ describe('the popup menu', () => {
     expect(style).toContain('left:123')
     expect(style).toContain('top:456')
   })
+
+  it('ignores falsy items', () => {
+    const popupMenu = render(
+      <PopupMenu
+        position={new Vector(0, 0)}
+        menuItems={[[1, 'a'], null, [2, 'b'], '', false, [3, 'c']]}
+      />,
+    )
+
+    expect(popupMenu.children().length).toBe(3)
+  })
 })
