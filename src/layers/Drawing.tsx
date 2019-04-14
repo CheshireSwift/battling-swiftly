@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 
 import { layerStyle } from '../helpers/styleSnippets'
 import { useEventValue } from '../helpers/hooks'
-import { Vector } from '../helpers/Vector'
+import Vector from '../helpers/Vector'
 import PopupMenu from '../ui/PopupMenu'
 import Tool from '../data/Tool'
 import CharacterMarker, { Character } from '../graphics/CharacterMarker'
@@ -151,7 +151,7 @@ export const Drawing = ({
         {plottingLine()}
       </svg>
       <PopupMenu
-        position={menuPosition}
+        position={menuPosition ? menuPosition.toStyle() : null}
         menuItems={[
           [Tool.Measure, 'Measure'],
           controlledCharacterKey && [Tool.Move, 'Move'],

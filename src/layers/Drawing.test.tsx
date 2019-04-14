@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mount, render, shallow, ReactWrapper } from 'enzyme'
+import { mount, render, ReactWrapper } from 'enzyme'
 
 import Drawing from './Drawing'
 import Tool from '../data/Tool'
@@ -17,6 +17,21 @@ const character = (name: string) => ({
 })
 
 describe('the drawing layer', () => {
+  it('matches the snapshot', () => {
+    expect(
+      render(
+        <Drawing
+          dimensions={{ width: 200, height: 100 }}
+          dpi={10}
+          characters={[
+            { name: 'Bob', key: '123xyz', position: { x: 1, y: 2 } },
+          ]}
+          update={jest.fn}
+        />,
+      ),
+    ).toMatchSnapshot()
+  })
+
   it('allows rangefinding', () => {
     const drawingLayer = mount(
       <Drawing

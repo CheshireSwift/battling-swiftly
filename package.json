@@ -6,6 +6,7 @@
   "scripts": {
     "build": "parcel build index.html",
     "dev": "concurrently -n build,types,tests -c magenta,cyan,green npm:watch-build npm:watch-types npm:watch-tests",
+    "checks": "concurrently -n types,tests -c cyan,green npm:typecheck \"jest --ci\"",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "watch-build": "parcel serve index.html",

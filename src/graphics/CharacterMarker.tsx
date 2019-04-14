@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Vector } from '../helpers/Vector'
+import Vector from '../helpers/Vector'
 
 export type Character = {
   key: string
@@ -28,7 +28,9 @@ export const CharacterMarker = ({
   }
 
   const position = Vector.fromXY(character.position)
-  const offsetPosition = position.add(new Vector(15, -15))
+  const offsetPosition = position.add(
+    new Vector(15, -15).multiply(1 / window.devicePixelRatio),
+  )
   const color = character.color || 'lime'
 
   const radiusCircles = (highlight || hover) && (
@@ -37,7 +39,7 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={6 * dpi}
         stroke={color}
-        strokeWidth="0.5"
+        strokeWidth={0.5 / window.devicePixelRatio}
         fill={color}
         fillOpacity="0.1"
       />
@@ -45,7 +47,7 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={1 * dpi}
         stroke={color}
-        strokeWidth="0.5"
+        strokeWidth={0.5 / window.devicePixelRatio}
         fill={color}
         fillOpacity="0.2"
       />
@@ -56,21 +58,24 @@ export const CharacterMarker = ({
     <>
       <circle
         {...position.prefix('c')}
-        r="4"
+        r={4 / window.devicePixelRatio}
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={1.5 / window.devicePixelRatio}
         fill={color}
         fillOpacity="0.1"
         {...hoverHandlers}
       />
       <path
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={1.5 / window.devicePixelRatio}
         fill="none"
         d={`
 M ${position.x + 2},${position.y - 2}
 L ${offsetPosition.x},${offsetPosition.y + 2}
-L ${offsetPosition.x + character.name.length * 6},${offsetPosition.y + 2}
+L ${offsetPosition.x +
+          (character.name.length * 6) /
+            window.devicePixelRatio},${offsetPosition.y +
+          2 / window.devicePixelRatio}
     `}
       />
     </>
@@ -80,7 +85,11 @@ L ${offsetPosition.x + character.name.length * 6},${offsetPosition.y + 2}
     <text
       {...offsetPosition}
       fill={color}
-      style={{ fontFamily: 'monospace', fontWeight: 'bold' }}
+      style={{
+        fontFamily: 'monospace',
+        fontWeight: 'bold',
+        fontSize: 14 / window.devicePixelRatio,
+      }}
       {...hoverHandlers}
     >
       {character.name}

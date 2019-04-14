@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the popup menu matches the snapshot 1`] = `
+<Unknown
+  menuItems={
+    Array [
+      Array [
+        "a",
+        "foo",
+      ],
+      Array [
+        "b",
+        "bar",
+      ],
+    ]
+  }
+  position={
+    Object {
+      "left": 20,
+      "top": 10,
+    }
+  }
+/>
+`;

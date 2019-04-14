@@ -2,9 +2,18 @@ import * as React from 'react'
 import { mount, render } from 'enzyme'
 
 import PopupMenu from './PopupMenu'
-import { Vector } from '../helpers/vector'
+import Vector from '../helpers/vector'
 
 describe('the popup menu', () => {
+  it('matches the snapshot', () => {
+    expect(
+      <PopupMenu
+        position={{ top: 10, left: 20 }}
+        menuItems={[['a', 'foo'], ['b', 'bar']]}
+      />,
+    ).toMatchSnapshot()
+  })
+
   it('hides itself when not given a position', () => {
     const popupMenu = render(<PopupMenu position={null} menuItems={[]} />)
     expect(popupMenu.html()).toBeNull()
@@ -55,7 +64,7 @@ describe('the popup menu', () => {
 
   it('draws itself at the specified position', () => {
     const popupMenu = render(
-      <PopupMenu position={new Vector(123, 456)} menuItems={[]} />,
+      <PopupMenu position={new Vector(123, 456).toStyle()} menuItems={[]} />,
     )
 
     const style = popupMenu.attr('style')
@@ -66,7 +75,7 @@ describe('the popup menu', () => {
   it('ignores falsy items', () => {
     const popupMenu = render(
       <PopupMenu
-        position={new Vector(0, 0)}
+        position={new Vector(0, 0).toStyle()}
         menuItems={[[1, 'a'], null, [2, 'b'], '', false, [3, 'c']]}
       />,
     )

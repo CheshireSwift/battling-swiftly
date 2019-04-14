@@ -69,3 +69,5 @@ export class Vector {
     }
   }
 }
+
+export default Vector
