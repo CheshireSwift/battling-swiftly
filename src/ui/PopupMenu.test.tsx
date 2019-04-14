@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount, render } from 'enzyme'
 
 import PopupMenu from './PopupMenu'
-import Vector from '../helpers/vector'
+import Vector from '../helpers/Vector'
 
 describe('the popup menu', () => {
   it('matches the snapshot', () => {
