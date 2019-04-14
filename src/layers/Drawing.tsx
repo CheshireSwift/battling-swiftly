@@ -172,36 +172,41 @@ type PlottingLineProps = {
   dpi: number
 }
 const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
+  const shared = {
+    stroke: 'lime',
+    strokeWidth: 1.5 / devicePixelRatio,
+  }
+  const fontSize = 16 / devicePixelRatio
+
   const lineVector = start.difference(end)
+  const offsetVector = lineVector.normalize(2 * fontSize, 1.5 * fontSize)
+
   return (
     <>
-      <line
-        {...start.suffix('1')}
-        {...end.suffix('2')}
-        stroke="lime"
-        strokeWidth="1.5"
-      />
+      <line {...start.suffix('1')} {...end.suffix('2')} {...shared} />
       <circle
         {...end.prefix('c')}
-        r="4"
-        stroke="lime"
-        strokeWidth="1.5"
+        r={4 / devicePixelRatio}
+        {...shared}
         fill="none"
       />
       <text
-        {...end}
+        {...end.add(offsetVector)}
         fill="lime"
-        fontSize="16"
+        fontSize={fontSize}
         textAnchor="middle"
         dominantBaseline="middle"
-        {...lineVector.normalize(30, 15).prefix('d')}
         style={{
           fontFamily: 'monospace',
-          fontWeight: 'bold',
           cursor: 'pointer',
         }}
       >
-        {(lineVector.length() / dpi).toFixed(1)}"
+        <tspan dy={-fontSize / 2} style={{ fontWeight: 'bolder' }}>
+          {(lineVector.length() / dpi).toFixed(1)}"
+        </tspan>
+        <tspan x={end.x + offsetVector.x} dy={fontSize}>
+          {end.multiply(1 / dpi).toString()}
+        </tspan>
       </text>
     </>
   )

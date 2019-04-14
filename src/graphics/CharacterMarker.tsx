@@ -29,7 +29,7 @@ export const CharacterMarker = ({
 
   const position = Vector.fromXY(character.position)
   const offsetPosition = position.add(
-    new Vector(15, -15).multiply(1 / window.devicePixelRatio),
+    new Vector(15, -15).multiply(1 / devicePixelRatio),
   )
   const color = character.color || 'lime'
 
@@ -39,7 +39,7 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={6 * dpi}
         stroke={color}
-        strokeWidth={0.5 / window.devicePixelRatio}
+        strokeWidth={0.5 / devicePixelRatio}
         fill={color}
         fillOpacity="0.1"
       />
@@ -47,35 +47,34 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={1 * dpi}
         stroke={color}
-        strokeWidth={0.5 / window.devicePixelRatio}
+        strokeWidth={0.5 / devicePixelRatio}
         fill={color}
         fillOpacity="0.2"
       />
     </>
   )
 
+  const handleBarHeight = offsetPosition.y + 2 / devicePixelRatio
+  const handleBarLength = (character.name.length * 6) / devicePixelRatio
   const mapHandle = (
     <>
       <circle
         {...position.prefix('c')}
-        r={4 / window.devicePixelRatio}
+        r={4 / devicePixelRatio}
         stroke={color}
-        strokeWidth={1.5 / window.devicePixelRatio}
+        strokeWidth={1.5 / devicePixelRatio}
         fill={color}
         fillOpacity="0.1"
         {...hoverHandlers}
       />
       <path
         stroke={color}
-        strokeWidth={1.5 / window.devicePixelRatio}
+        strokeWidth={1.5 / devicePixelRatio}
         fill="none"
         d={`
-M ${position.x + 2},${position.y - 2}
-L ${offsetPosition.x},${offsetPosition.y + 2}
-L ${offsetPosition.x +
-          (character.name.length * 6) /
-            window.devicePixelRatio},${offsetPosition.y +
-          2 / window.devicePixelRatio}
+M ${position.x + 2 / devicePixelRatio},${position.y - 2 / devicePixelRatio}
+L ${offsetPosition.x},${handleBarHeight}
+L ${offsetPosition.x + handleBarLength},${handleBarHeight}
     `}
       />
     </>
@@ -88,7 +87,7 @@ L ${offsetPosition.x +
       style={{
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        fontSize: 14 / window.devicePixelRatio,
+        fontSize: 14 / devicePixelRatio,
       }}
       {...hoverHandlers}
     >

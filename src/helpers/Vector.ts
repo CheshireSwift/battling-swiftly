@@ -55,6 +55,10 @@ export class Vector {
     return { x: this.x, y: this.y }
   }
 
+  toString() {
+    return `${Math.round(this.x)},${Math.round(this.y)}`
+  }
+
   prefix(prefix: string) {
     return {
       [prefix + 'x']: this.x,

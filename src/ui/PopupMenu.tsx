@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import Vector from '../helpers/Vector'
+import { ignoreZoom } from '../helpers/styleSnippets'
 
 type PopupMenuProps<T> = {
   position: { top: number; left: number } | null
@@ -22,10 +22,16 @@ export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
         <div
           key={key.toString()}
           id={'popup-menu-item-' + key}
-          style={{
-            border: props.selectedItem === key ? '1px solid lime' : 'none',
-            background: 'gray',
-          }}
+          style={ignoreZoom({
+            padding: 2,
+            fontFamily: 'monospace',
+            fontSize: 14,
+            background: '#000000aa',
+            borderColor: 'lime',
+            borderStyle: 'solid',
+            borderWidth: props.selectedItem === key ? 1 : 0,
+            color: 'lime',
+          })}
           onClick={e => {
             props.onSelectItem && props.onSelectItem(key)
             e.stopPropagation()

@@ -52,6 +52,7 @@ describe('the drawing layer', () => {
     expect(drawingLayer.find('line').prop('y2')).toBe(60)
 
     expect(drawingLayer.text()).toContain('5.0"')
+    expect(drawingLayer.text()).toContain('4,6')
   })
 
   it('shows the menu on right click', () => {
