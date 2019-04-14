@@ -20,3 +20,23 @@ export function useEventValue<E extends Event, T>(
 
   return value
 }
+
+export function useKeyboardToggle(key: string, defaultValue: boolean) {
+  const comparisonKey = key.toLowerCase()
+  const [value, setValue] = useState(defaultValue)
+
+  useEffect(() => {
+    const handleEvent = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === comparisonKey) {
+        setValue(!value)
+      }
+    }
+
+    window.addEventListener('keydown', handleEvent)
+
+    return () => {
+      window.removeEventListener('keydown', handleEvent)
+    }
+  })
+  return value
+}
