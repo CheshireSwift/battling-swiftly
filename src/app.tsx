@@ -22,36 +22,8 @@ import Options, { useOptions } from './data/Options'
 //   i = (i + 1) % colours.length
 // }, 300)
 
-// const characters = [
-//   {
-//     name: 'Waffle',
-//     position: { x: 240, y: 400 },
-//     color: palette.friendly,
-//   },
-//   {
-//     name: 'Puppy',
-//     position: { x: 690, y: 420 },
-//     color: palette.unknown,
-//   },
-//   {
-//     name: 'Mister E',
-//     position: { x: 600, y: 400 },
-//     color: palette.neutral,
-//   },
-//   {
-//     name: 'Intoner',
-//     position: { x: 150, y: 200 },
-//     color: palette.hostile,
-//   },
-//   {
-//     name: 'Greenjacket',
-//     position: { x: 300, y: 150 },
-//     color: palette.hostile,
-//   },
-// ]
-
 const App = () => {
-  const [showOptions, setShowOptions] = React.useState(true) // TODO default false
+  const [showOptions, setShowOptions] = React.useState(false)
   const [options, setOption] = useOptions()
   const [imageDimensions, setImageDimensions] = React.useState({
     height: 0,

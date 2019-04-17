@@ -28,10 +28,8 @@ export const CharacterMarker = ({
     },
   }
 
-  const options = React.useContext(Options)
-  const sizeMultiplier = options.fixedScale
-    ? options.fixedScale
-    : 1 / window.devicePixelRatio
+  const { fixedScale } = React.useContext(Options)
+  const sizeMultiplier = fixedScale ? fixedScale : 1 / window.devicePixelRatio
 
   const position = Vector.fromXY(character.position)
   const offsetPosition = position.add(

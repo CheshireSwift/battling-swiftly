@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import Vector from '../helpers/Vector'
+import Options from '../data/Options'
 
 type PlottingLineProps = {
   start: Vector
@@ -9,11 +10,13 @@ type PlottingLineProps = {
 }
 
 export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
+  const { fixedScale } = React.useContext(Options)
+  const scaleMultiplier = fixedScale ? fixedScale : 1 / window.devicePixelRatio
   const shared = {
     stroke: 'lime',
-    strokeWidth: 1.5 / devicePixelRatio,
+    strokeWidth: 1.5 * scaleMultiplier,
   }
-  const fontSize = 16 / devicePixelRatio
+  const fontSize = 16 * scaleMultiplier
 
   const lineVector = start.difference(end)
   const offsetVector = lineVector.normalize(2 * fontSize, 1.5 * fontSize)
@@ -23,7 +26,7 @@ export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
       <line {...start.suffix('1')} {...end.suffix('2')} {...shared} />
       <circle
         {...end.prefix('c')}
-        r={4 / devicePixelRatio}
+        r={4 * scaleMultiplier}
         {...shared}
         fill="none"
       />
