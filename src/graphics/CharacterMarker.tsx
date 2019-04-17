@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Vector from '../helpers/Vector'
+import Options from '../data/Options'
 
 export type Character = {
   key: string
@@ -27,9 +28,14 @@ export const CharacterMarker = ({
     },
   }
 
+  const options = React.useContext(Options)
+  const sizeMultiplier = options.fixedScale
+    ? options.fixedScale
+    : 1 / window.devicePixelRatio
+
   const position = Vector.fromXY(character.position)
   const offsetPosition = position.add(
-    new Vector(15, -15).multiply(1 / devicePixelRatio),
+    new Vector(15, -15).multiply(1 * sizeMultiplier),
   )
   const color = character.color || 'lime'
 
@@ -39,7 +45,7 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={6 * dpi}
         stroke={color}
-        strokeWidth={0.5 / devicePixelRatio}
+        strokeWidth={0.5 * sizeMultiplier}
         fill={color}
         fillOpacity="0.1"
       />
@@ -47,32 +53,32 @@ export const CharacterMarker = ({
         {...position.prefix('c')}
         r={1 * dpi}
         stroke={color}
-        strokeWidth={0.5 / devicePixelRatio}
+        strokeWidth={0.5 * sizeMultiplier}
         fill={color}
         fillOpacity="0.2"
       />
     </>
   )
 
-  const handleBarHeight = offsetPosition.y + 2 / devicePixelRatio
-  const handleBarLength = (character.name.length * 6) / devicePixelRatio
+  const handleBarHeight = offsetPosition.y + 2 * sizeMultiplier
+  const handleBarLength = character.name.length * 6 * sizeMultiplier
   const mapHandle = (
     <>
       <circle
         {...position.prefix('c')}
-        r={4 / devicePixelRatio}
+        r={4 * sizeMultiplier}
         stroke={color}
-        strokeWidth={1.5 / devicePixelRatio}
+        strokeWidth={1.5 * sizeMultiplier}
         fill={color}
         fillOpacity="0.1"
         {...hoverHandlers}
       />
       <path
         stroke={color}
-        strokeWidth={1.5 / devicePixelRatio}
+        strokeWidth={1.5 * sizeMultiplier}
         fill="none"
         d={`
-M ${position.x + 2 / devicePixelRatio},${position.y - 2 / devicePixelRatio}
+M ${position.x + 2 * sizeMultiplier},${position.y - 2 * sizeMultiplier}
 L ${offsetPosition.x},${handleBarHeight}
 L ${offsetPosition.x + handleBarLength},${handleBarHeight}
     `}
@@ -87,7 +93,7 @@ L ${offsetPosition.x + handleBarLength},${handleBarHeight}
       style={{
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        fontSize: 14 / devicePixelRatio,
+        fontSize: 14 * sizeMultiplier,
       }}
       {...hoverHandlers}
     >

@@ -7,6 +7,7 @@ import Vector from '../helpers/Vector'
 import PopupMenu from '../ui/PopupMenu'
 import Tool from '../data/Tool'
 import CharacterMarker, { Character } from '../graphics/CharacterMarker'
+import PlottingLine from '../graphics/PlottingLine'
 
 type DrawingProps = {
   dimensions: { height: number; width: number }
@@ -14,6 +15,7 @@ type DrawingProps = {
   characters: Character[]
   controlledCharacterKey?: string
   update: (key: string, data: Partial<Character>) => void
+  onOptionsSelected: () => void
 }
 
 const cappedDifference = (start: Vector, end: Vector, cap: number) =>
@@ -25,6 +27,7 @@ export const Drawing = ({
   characters,
   controlledCharacterKey,
   update,
+  onOptionsSelected,
 }: DrawingProps) => {
   const movementCap = 6 * dpi
   const [moveStart, setMoveStart] = React.useState<Vector | null>(null)
@@ -155,10 +158,16 @@ export const Drawing = ({
         menuItems={[
           [Tool.Measure, 'Measure'],
           controlledCharacterKey && [Tool.Move, 'Move'],
+          ['options', '...'] as ['options', string],
         ]}
         selectedItem={selectedTool}
-        onSelectItem={(selection: Tool) => {
-          setSelectedTool(selection)
+        onSelectItem={(selection: Tool | 'options') => {
+          if (selection === 'options') {
+            onOptionsSelected()
+          } else {
+            setSelectedTool(selection)
+          }
+
           setMenuPosition(null)
         }}
       />
@@ -166,49 +175,4 @@ export const Drawing = ({
   )
 }
 
-type PlottingLineProps = {
-  start: Vector
-  end: Vector
-  dpi: number
-}
-const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
-  const shared = {
-    stroke: 'lime',
-    strokeWidth: 1.5 / devicePixelRatio,
-  }
-  const fontSize = 16 / devicePixelRatio
-
-  const lineVector = start.difference(end)
-  const offsetVector = lineVector.normalize(2 * fontSize, 1.5 * fontSize)
-
-  return (
-    <>
-      <line {...start.suffix('1')} {...end.suffix('2')} {...shared} />
-      <circle
-        {...end.prefix('c')}
-        r={4 / devicePixelRatio}
-        {...shared}
-        fill="none"
-      />
-      <text
-        {...end.add(offsetVector)}
-        fill="lime"
-        fontSize={fontSize}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        style={{
-          fontFamily: 'monospace',
-          cursor: 'pointer',
-        }}
-      >
-        <tspan dy={-fontSize / 2} style={{ fontWeight: 'bolder' }}>
-          {(lineVector.length() / dpi).toFixed(1)}"
-        </tspan>
-        <tspan x={end.x + offsetVector.x} dy={fontSize}>
-          {end.multiply(1 / dpi).toString()}
-        </tspan>
-      </text>
-    </>
-  )
-}
 export default Drawing

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { ignoreZoom } from '../helpers/styleSnippets'
+import { cMenuBg, cPrimary } from '../styling/constants'
 
 type PopupMenuProps<T> = {
   position: { top: number; left: number } | null
@@ -24,10 +25,8 @@ export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
           id={'popup-menu-item-' + key}
           style={ignoreZoom({
             padding: 2,
-            fontFamily: 'monospace',
-            fontSize: 14,
-            background: '#000000aa',
-            borderColor: 'lime',
+            background: cMenuBg,
+            borderColor: cPrimary,
             borderStyle: 'solid',
             borderWidth: props.selectedItem === key ? 1 : 0,
             color: 'lime',

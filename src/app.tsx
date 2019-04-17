@@ -6,9 +6,10 @@ import 'firebase/firestore'
 import queryStringData from './helpers/queryStringData'
 import Background from './layers/Background'
 import Drawing from './layers/Drawing'
-import palette from './graphics/palette'
-import CharacterMarker, { Character } from './graphics/CharacterMarker'
 import useFirebase from './data/useFirebase'
+import Help from './ui/Help'
+import { Character } from './graphics/CharacterMarker'
+import Options, { useOptions } from './data/Options'
 
 // const colours = [
 //   palette.friendly,
@@ -50,6 +51,8 @@ import useFirebase from './data/useFirebase'
 // ]
 
 const App = () => {
+  const [showOptions, setShowOptions] = React.useState(true) // TODO default false
+  const [options, setOption] = useOptions()
   const [imageDimensions, setImageDimensions] = React.useState({
     height: 0,
     width: 0,
@@ -89,7 +92,7 @@ const App = () => {
   )
 
   return (
-    <>
+    <Options.Provider value={options}>
       <Background url={query.bg} onLoadDimensions={setImageDimensions} />
       <Drawing
         dimensions={imageDimensions}
@@ -99,8 +102,16 @@ const App = () => {
         update={(key, data) => {
           collection.doc(key).update(data)
         }}
+        onOptionsSelected={() => {
+          setShowOptions(true)
+        }}
       />
-    </>
+      <Help
+        show={showOptions}
+        setOption={setOption}
+        onClose={() => setShowOptions(false)}
+      />
+    </Options.Provider>
   )
 }
 

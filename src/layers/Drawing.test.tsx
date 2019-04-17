@@ -26,7 +26,8 @@ describe('the drawing layer', () => {
           characters={[
             { name: 'Bob', key: '123xyz', position: { x: 1, y: 2 } },
           ]}
-          update={jest.fn}
+          update={jest.fn()}
+          onOptionsSelected={jest.fn()}
         />,
       ),
     ).toMatchSnapshot()
@@ -38,7 +39,8 @@ describe('the drawing layer', () => {
         dimensions={{ width: 200, height: 100 }}
         dpi={10}
         characters={[]}
-        update={jest.fn}
+        update={jest.fn()}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
@@ -62,6 +64,7 @@ describe('the drawing layer', () => {
         dpi={1}
         characters={[]}
         update={jest.fn()}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
@@ -77,6 +80,7 @@ describe('the drawing layer', () => {
         dpi={1}
         characters={[character('Waffle'), character('Pickle')]}
         update={jest.fn()}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
@@ -91,6 +95,7 @@ describe('the drawing layer', () => {
         dpi={1}
         characters={[]}
         update={jest.fn()}
+        onOptionsSelected={jest.fn()}
       />,
     )
     drawingLayer.simulate('contextmenu')
@@ -107,6 +112,7 @@ describe('the drawing layer', () => {
         controlledCharacterKey={hero.key}
         characters={[hero, other]}
         update={jest.fn()}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
@@ -131,6 +137,7 @@ describe('the drawing layer', () => {
         controlledCharacterKey={hero.key}
         characters={[hero]}
         update={update}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
@@ -151,6 +158,7 @@ describe('the drawing layer', () => {
         controlledCharacterKey={hero.key}
         characters={[hero]}
         update={update}
+        onOptionsSelected={jest.fn()}
       />,
     )
 
