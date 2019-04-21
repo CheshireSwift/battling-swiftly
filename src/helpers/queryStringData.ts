@@ -1,11 +1,12 @@
 import * as _ from 'lodash'
 
 type StringDict<T> = { [P in keyof T]?: string }
+type ArrayStringDict<T> = { [P in keyof T]?: string[] }
 
-const pairsByMappingKeys = <T>(
+const pairsByMappingKeys = <T, R>(
   arr: Array<keyof T>,
-  f: (key: keyof T) => string,
-) => (arr ? arr.map(key => [key, f(key)] as [keyof T, string]) : [])
+  f: (key: keyof T) => R,
+) => (arr ? arr.map(key => [key, f(key)] as [keyof T, R]) : [])
 
 export default function queryStringData<T>({
   valueKeys = [],
@@ -13,14 +14,20 @@ export default function queryStringData<T>({
 }: {
   valueKeys?: Array<keyof T>
   arrayKeys?: Array<keyof T>
-}): StringDict<T> {
+}): { values: StringDict<T>; arrays: ArrayStringDict<T> } {
   const urlParams = new URLSearchParams(window.location.search)
-  const urlParamsGet = urlParams.get.bind(urlParams)
-  const urlParamsGetAll = urlParams.getAll.bind(urlParams)
+  const urlParamsGet: (key: keyof T) => string | null = urlParams.get.bind(
+    urlParams,
+  )
+  const urlParamsGetAll: (key: keyof T) => string[] = urlParams.getAll.bind(
+    urlParams,
+  )
 
   const values = pairsByMappingKeys(valueKeys, urlParamsGet)
   const arrays = pairsByMappingKeys(arrayKeys, urlParamsGetAll)
 
-  const results: unknown = _.fromPairs([...values, ...arrays])
-  return results as StringDict<T>
+  return { values: _.fromPairs(values), arrays: _.fromPairs(arrays) } as {
+    values: StringDict<T>
+    arrays: ArrayStringDict<T>
+  }
 }

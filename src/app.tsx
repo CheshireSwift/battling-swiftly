@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import * as _ from 'lodash'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 
@@ -31,32 +32,37 @@ const App = () => {
   })
 
   const query = queryStringData({
-    valueKeys: ['bg', 'dpi', 'collection', 'char'],
+    valueKeys: ['bg', 'dpi', 'collection'],
+    arrayKeys: ['char'],
   })
 
-  if (!query.bg) {
+  const [selectedCharacter, setSelectedCharacter] = React.useState(
+    _.first(query.arrays.char),
+  )
+
+  if (!query.values.bg) {
     return <div>Require background image (?bg=url)</div>
   }
 
-  if (!query.dpi) {
+  if (!query.values.dpi) {
     return <div>Require dpi (?dpi=number)</div>
   }
 
-  if (!query.collection) {
+  if (!query.values.collection) {
     return <div>Require data collection (?collection=collection-name)</div>
   }
 
-  const dpi = parseInt(query.dpi)
+  const dpi = parseInt(query.values.dpi)
 
   const collection = firebase
     .app()
     .firestore()
-    .collection(query.collection)
+    .collection(query.values.collection)
 
   const snapshot = useFirebase(collection)
 
   if (!snapshot) {
-    return <div>Could not find collection {query.collection}</div>
+    return <div>Could not find collection {query.values.collection}</div>
   }
 
   const characters = snapshot.docs.map(
@@ -65,11 +71,11 @@ const App = () => {
 
   return (
     <Options.Provider value={options}>
-      <Background url={query.bg} onLoadDimensions={setImageDimensions} />
+      <Background url={query.values.bg} onLoadDimensions={setImageDimensions} />
       <Drawing
         dimensions={imageDimensions}
         dpi={dpi}
-        controlledCharacterKey={query.char}
+        controlledCharacterKey={selectedCharacter}
         characters={characters}
         update={(key, data) => {
           collection.doc(key).update(data)
@@ -83,9 +89,55 @@ const App = () => {
         setOption={setOption}
         onClose={() => setShowOptions(false)}
       />
+      {selectedCharacter &&
+        query.arrays.char &&
+        query.arrays.char.length > 1 && (
+          <CharacterSelector
+            characters={characters}
+            keys={query.arrays.char}
+            selected={selectedCharacter}
+            onSelect={setSelectedCharacter}
+          />
+        )}
     </Options.Provider>
   )
 }
+
+type CharacterSelectorProps = {
+  characters: Character[]
+  keys: string[]
+  selected: string
+  onSelect: (key: string) => void
+}
+const CharacterSelector = ({
+  characters,
+  keys,
+  selected,
+  onSelect,
+}: CharacterSelectorProps) => (
+  <div
+    style={{
+      position: 'fixed',
+      background: 'black',
+      color: 'lime',
+      top: 0,
+      right: 0,
+    }}
+  >
+    {keys.map(key => (
+      <div
+        key={key}
+        style={{
+          padding: '0.5rem',
+          border: key === selected ? '1px solid lime' : '1px solid black',
+        }}
+        onClick={() => onSelect(key)}
+      >
+        {_.get(_.find(characters, { key }), 'name')}
+      </div>
+    ))}
+  </div>
+)
 
 // Initialize Firebase
 const config = {
