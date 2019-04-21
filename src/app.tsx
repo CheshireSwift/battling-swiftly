@@ -9,8 +9,9 @@ import Background from './layers/Background'
 import Drawing from './layers/Drawing'
 import useFirebase from './data/useFirebase'
 import Help from './ui/Help'
-import { Character } from './graphics/CharacterMarker'
 import Options, { useOptions } from './data/Options'
+import Character from './data/Character'
+import CharacterSelector from './ui/CharacterSelector'
 
 // const colours = [
 //   palette.friendly,
@@ -94,7 +95,7 @@ const App = () => {
         query.arrays.char.length > 1 && (
           <CharacterSelector
             characters={characters}
-            keys={query.arrays.char}
+            availableKeys={query.arrays.char}
             selected={selectedCharacter}
             onSelect={setSelectedCharacter}
           />
@@ -102,42 +103,6 @@ const App = () => {
     </Options.Provider>
   )
 }
-
-type CharacterSelectorProps = {
-  characters: Character[]
-  keys: string[]
-  selected: string
-  onSelect: (key: string) => void
-}
-const CharacterSelector = ({
-  characters,
-  keys,
-  selected,
-  onSelect,
-}: CharacterSelectorProps) => (
-  <div
-    style={{
-      position: 'fixed',
-      background: 'black',
-      color: 'lime',
-      top: 0,
-      right: 0,
-    }}
-  >
-    {keys.map(key => (
-      <div
-        key={key}
-        style={{
-          padding: '0.5rem',
-          border: key === selected ? '1px solid lime' : '1px solid black',
-        }}
-        onClick={() => onSelect(key)}
-      >
-        {_.get(_.find(characters, { key }), 'name')}
-      </div>
-    ))}
-  </div>
-)
 
 // Initialize Firebase
 const config = {

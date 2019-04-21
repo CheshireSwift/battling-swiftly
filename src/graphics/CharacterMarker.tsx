@@ -1,13 +1,7 @@
 import * as React from 'react'
 import Vector from '../helpers/Vector'
 import Options from '../data/Options'
-
-export type Character = {
-  key: string
-  name: string
-  position: { x: number; y: number }
-  color?: string
-}
+import Character from '../data/Character'
 
 export const CharacterMarker = ({
   character,

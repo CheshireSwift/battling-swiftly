@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html",
-    "dev": "concurrently -n build,types,tests -c magenta,cyan,green npm:watch-build npm:watch-types npm:watch-tests",
+    "dev": "concurrently -i -n tests,types,build -c green,cyan,magenta npm:watch-tests npm:watch-build npm:watch-types",
     "checks": "concurrently -n types,tests -c cyan,green npm:typecheck \"jest --ci\"",
     "start": "npm run dev",
     "test": "jest",

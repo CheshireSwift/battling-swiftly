@@ -6,8 +6,9 @@ import { useEventValue } from '../helpers/hooks'
 import Vector from '../helpers/Vector'
 import PopupMenu from '../ui/PopupMenu'
 import Tool from '../data/Tool'
-import CharacterMarker, { Character } from '../graphics/CharacterMarker'
+import CharacterMarker from '../graphics/CharacterMarker'
 import PlottingLine from '../graphics/PlottingLine'
+import Character from '../data/Character'
 
 type DrawingProps = {
   dimensions: { height: number; width: number }
