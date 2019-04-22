@@ -1,8 +1,5 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as _ from 'lodash'
-import * as firebase from 'firebase/app'
-import 'firebase/firestore'
 
 import queryStringData from './helpers/queryStringData'
 import Background from './layers/Background'
@@ -11,6 +8,7 @@ import useFirebase from './data/useFirebase'
 import Help from './ui/Help'
 import Options, { useOptions } from './data/Options'
 import Character from './data/Character'
+import Store from './data/Store'
 import CharacterSelector from './ui/CharacterSelector'
 
 // const colours = [
@@ -24,7 +22,7 @@ import CharacterSelector from './ui/CharacterSelector'
 //   i = (i + 1) % colours.length
 // }, 300)
 
-const App = () => {
+export const App = ({ store }: { store: Store }) => {
   const [showOptions, setShowOptions] = React.useState(false)
   const [options, setOption] = useOptions()
   const [imageDimensions, setImageDimensions] = React.useState({
@@ -55,10 +53,7 @@ const App = () => {
 
   const dpi = parseInt(query.values.dpi)
 
-  const collection = firebase
-    .app()
-    .firestore()
-    .collection(query.values.collection)
+  const collection = store.collection(query.values.collection)
 
   const snapshot = useFirebase(collection)
 
@@ -104,16 +99,4 @@ const App = () => {
   )
 }
 
-// Initialize Firebase
-const config = {
-  apiKey: 'AIzaSyAZwTp8XAqss1HaoEtr_Ei5Zd5RE3p6v1k',
-  authDomain: 'battling-swiftly.firebaseapp.com',
-  databaseURL: 'https://battling-swiftly.firebaseio.com',
-  projectId: 'battling-swiftly',
-  storageBucket: 'battling-swiftly.appspot.com',
-  messagingSenderId: '451921975216',
-}
-
-firebase.initializeApp(config)
-
-ReactDOM.render(<App />, document.getElementById('battlemap'))
+export default App

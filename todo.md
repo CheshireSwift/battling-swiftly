@@ -7,7 +7,7 @@
 
 ## Non-essential but important
 
-- [ ] Multi-character control (GM)
+- [x] Multi-character control (GM)
 
 ## Nice To Have
 
