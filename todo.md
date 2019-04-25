@@ -13,3 +13,4 @@
 
 - [ ] Measure snap
 - [x] Neater looking measure?
+- [ ] Blast templates

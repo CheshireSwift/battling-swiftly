@@ -68,6 +68,21 @@ export const Help = ({
             placeholder="Variable"
           />
         </li>
+        <li>
+          Plotting colour
+          <input
+            style={{
+              margin: '1rem',
+              background: 'black',
+              border: `1px solid ${cPrimary}`,
+              color: cPrimary,
+              fontFamily: 'monospace',
+            }}
+            value={options.drawColour}
+            onChange={e => setOption('drawColour', e.target.value)}
+            placeholder="CSS Colour"
+          />
+        </li>
       </ul>
     </div>
   ) : null

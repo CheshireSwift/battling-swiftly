@@ -2,7 +2,10 @@ import * as React from 'react'
 
 import { useLocalStorage } from '../helpers/hooks'
 
-const initialOptions = { fixedScale: null as number | null }
+const initialOptions = {
+  fixedScale: null as number | null,
+  drawColour: 'blue',
+}
 
 type GlobalOptions = typeof initialOptions
 export type OptionKey = keyof GlobalOptions

@@ -10,10 +10,10 @@ type PlottingLineProps = {
 }
 
 export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
-  const { fixedScale } = React.useContext(Options)
+  const { fixedScale, drawColour } = React.useContext(Options)
   const scaleMultiplier = fixedScale ? fixedScale : 1 / window.devicePixelRatio
   const shared = {
-    stroke: 'lime',
+    stroke: drawColour,
     strokeWidth: 1.5 * scaleMultiplier,
   }
   const fontSize = 16 * scaleMultiplier
@@ -32,7 +32,7 @@ export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
       />
       <text
         {...end.add(offsetVector)}
-        fill="lime"
+        fill={drawColour}
         fontSize={fontSize}
         textAnchor="middle"
         dominantBaseline="middle"
