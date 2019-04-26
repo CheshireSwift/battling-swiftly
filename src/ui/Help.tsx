@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 
 import { cPrimary, cMenuBg } from '../styling/constants'
 import Options, { SetOption, initialOptions } from '../data/Options'
+import customColorOptions from "../graphics/customColorOptions";
 
 export const Help = ({
   show,
@@ -70,7 +71,7 @@ export const Help = ({
         </li>
         <li>
           Plotting colour
-          <input
+          <select
             style={{
               margin: '1rem',
               background: 'black',
@@ -84,9 +85,11 @@ export const Help = ({
                 'drawColour',
                 e.target.value || initialOptions.drawColour,
               )
-            }
-            placeholder="CSS Colour"
-          />
+            }>
+            {Object.entries(customColorOptions).map(([key, value]) => {
+              return (<option value={value}>{key}</option>)
+            })}
+          </select>
         </li>
       </ul>
     </div>
