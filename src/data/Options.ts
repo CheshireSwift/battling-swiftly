@@ -1,10 +1,15 @@
 import * as React from 'react'
 
 import { useLocalStorage } from '../helpers/hooks'
+import queryStringData from '../helpers/queryStringData'
 
-const initialOptions = {
+const query = queryStringData({
+  valueKeys: ['draw'],
+})
+
+export const initialOptions = {
   fixedScale: null as number | null,
-  drawColour: 'blue',
+  drawColour: query.values.draw || 'lime',
 }
 
 type GlobalOptions = typeof initialOptions

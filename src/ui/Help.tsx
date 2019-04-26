@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { cPrimary, cMenuBg } from '../styling/constants'
-import Options, { SetOption } from '../data/Options'
+import Options, { SetOption, initialOptions } from '../data/Options'
 
 export const Help = ({
   show,
@@ -79,7 +79,12 @@ export const Help = ({
               fontFamily: 'monospace',
             }}
             value={options.drawColour}
-            onChange={e => setOption('drawColour', e.target.value)}
+            onChange={e =>
+              setOption(
+                'drawColour',
+                e.target.value || initialOptions.drawColour,
+              )
+            }
             placeholder="CSS Colour"
           />
         </li>

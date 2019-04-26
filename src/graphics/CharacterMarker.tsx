@@ -22,14 +22,14 @@ export const CharacterMarker = ({
     },
   }
 
-  const { fixedScale } = React.useContext(Options)
+  const { fixedScale, drawColour } = React.useContext(Options)
   const sizeMultiplier = fixedScale ? fixedScale : 1 / window.devicePixelRatio
 
   const position = Vector.fromXY(character.position)
   const offsetPosition = position.add(
     new Vector(15, -15).multiply(1 * sizeMultiplier),
   )
-  const color = character.color || 'lime'
+  const color = character.color || drawColour
 
   const radiusCircles = (highlight || hover) && (
     <>
@@ -48,6 +48,14 @@ export const CharacterMarker = ({
         strokeWidth={0.5 * sizeMultiplier}
         fill={color}
         fillOpacity="0.2"
+      />
+      <circle
+        {...position.prefix('c')}
+        r={7 * dpi}
+        stroke={color}
+        strokeDasharray="10"
+        strokeWidth={0.5 * sizeMultiplier}
+        fill="none"
       />
     </>
   )
