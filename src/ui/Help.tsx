@@ -87,17 +87,19 @@ export const Help = ({
               )
             }
           >
-            {Object.entries(customColorOptions).map(([key, value]) => {
-              return (
+            {_.map(Object.entries(customColorOptions), ([key, value]) =>
+              (
                 <option
                   key={key}
                   value={value}
                   style={{
                     color: `${value}`
                   }}
-                >{key}</option>
+                >
+                  {key}
+                </option>
               )
-            })}
+            )}
           </select>
         </li>
       </ul>
