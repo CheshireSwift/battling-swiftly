@@ -5,11 +5,11 @@ exports[`the app matches the snapshot 1`] = `
 M 259.99202542018276,634.2468544564283
 L 272.99202542018276,623.2468544564283
 L 308.99202542018276,623.2468544564283
-    \\"></path><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Waffle</text><circle cx=\\"457.99202542018276\\" cy=\\"236.24685445642828\\" r=\\"4\\" stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"orange\\" fill-opacity=\\"0.1\\"></circle><path stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"none\\" d=\\"
+    \\"></path><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Waffle</text><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-size: 14px;\\"></text><circle cx=\\"457.99202542018276\\" cy=\\"236.24685445642828\\" r=\\"4\\" stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"orange\\" fill-opacity=\\"0.1\\"></circle><path stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"none\\" d=\\"
 M 459.99202542018276,234.24685445642828
 L 472.99202542018276,223.24685445642828
 L 508.99202542018276,223.24685445642828
-    \\"></path><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Pickle</text></svg></div></div>"
+    \\"></path><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Pickle</text><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-size: 14px;\\"></text></svg></div></div>"
 `;
 
 exports[`the app matches the snapshot with bg missing 1`] = `
@@ -158,9 +158,9 @@ exports[`the app matches the snapshot with multiple controlled characters 1`] = 
 M 259.99202542018276,634.2468544564283
 L 272.99202542018276,623.2468544564283
 L 308.99202542018276,623.2468544564283
-    \\"></path><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Waffle</text><circle cx=\\"457.99202542018276\\" cy=\\"236.24685445642828\\" r=\\"4\\" stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"orange\\" fill-opacity=\\"0.1\\"></circle><path stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"none\\" d=\\"
+    \\"></path><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Waffle</text><text x=\\"272.99202542018276\\" y=\\"621.2468544564283\\" fill=\\"lime\\" style=\\"font-family: monospace; font-size: 14px;\\"></text><circle cx=\\"457.99202542018276\\" cy=\\"236.24685445642828\\" r=\\"4\\" stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"orange\\" fill-opacity=\\"0.1\\"></circle><path stroke=\\"orange\\" stroke-width=\\"1.5\\" fill=\\"none\\" d=\\"
 M 459.99202542018276,234.24685445642828
 L 472.99202542018276,223.24685445642828
 L 508.99202542018276,223.24685445642828
-    \\"></path><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Pickle</text></svg></div><div style=\\"position: fixed; background: black; color: lime; top: 0px; right: 0px;\\"><div id=\\"character-selector-option-hero\\" style=\\"padding: 0.5rem; border: 1px solid lime;\\">Waffle</div><div id=\\"character-selector-option-villain\\" style=\\"padding: 0.5rem; border: 1px solid black;\\">Pickle</div></div></div>"
+    \\"></path><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-weight: bold; font-size: 14px;\\">Pickle</text><text x=\\"472.99202542018276\\" y=\\"221.24685445642828\\" fill=\\"orange\\" style=\\"font-family: monospace; font-size: 14px;\\"></text></svg></div><div style=\\"position: fixed; background: black; color: lime; top: 0px; right: 0px;\\"><div id=\\"character-selector-option-hero\\" style=\\"padding: 0.5rem; border: 1px solid lime;\\">Waffle</div><div id=\\"character-selector-option-villain\\" style=\\"padding: 0.5rem; border: 1px solid black;\\">Pickle</div></div></div>"
 `;

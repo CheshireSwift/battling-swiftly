@@ -1,4 +1,6 @@
 import * as React from 'react'
+import * as _ from 'lodash'
+
 import Vector from '../helpers/Vector'
 import Options from '../data/Options'
 import Character from '../data/Character'
@@ -86,6 +88,7 @@ L ${offsetPosition.x + handleBarLength},${handleBarHeight}
     </>
   )
 
+  const fontSize = 14 * sizeMultiplier
   const nameText = (
     <text
       {...offsetPosition}
@@ -93,11 +96,35 @@ L ${offsetPosition.x + handleBarLength},${handleBarHeight}
       style={{
         fontFamily: 'monospace',
         fontWeight: 'bold',
-        fontSize: 14 * sizeMultiplier,
+        fontSize,
       }}
       {...hoverHandlers}
     >
       {character.name}
+    </text>
+  )
+
+  const notesText = (
+    <text
+      {...offsetPosition}
+      fill={color}
+      style={{
+        fontFamily: 'monospace',
+        fontSize,
+      }}
+    >
+      {character.notes &&
+        (highlight || hover ? (
+          character.notes.map(note => (
+            <tspan x={offsetPosition.x} dy={fontSize}>
+              {note}
+            </tspan>
+          ))
+        ) : (
+          <tspan x={offsetPosition.x} dy={fontSize}>
+            {_.repeat('•', character.notes.length)}
+          </tspan>
+        ))}
     </text>
   )
 
@@ -106,6 +133,7 @@ L ${offsetPosition.x + handleBarLength},${handleBarHeight}
       {radiusCircles}
       {mapHandle}
       {nameText}
+      {notesText}
     </>
   )
 }

@@ -3,6 +3,7 @@ export type Character = {
   name: string
   position: { x: number; y: number }
   color?: string
+  notes?: string[]
 }
 
 export default Character

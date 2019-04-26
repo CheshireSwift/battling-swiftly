@@ -14,3 +14,4 @@
 - [ ] Measure snap
 - [x] Neater looking measure?
 - [ ] Blast templates
+- [x] Notes array (aim, elevation, etc.)
