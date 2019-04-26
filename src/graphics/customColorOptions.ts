@@ -11,8 +11,6 @@ export default {
   Teal: "Teal",
   Aqua: "Aqua",
   Blue: "Blue",
-  Navy: "Navy",
-  Black: "Black",
   Gray: "Gray",
   Silver: "Silver",
   White: "White",
