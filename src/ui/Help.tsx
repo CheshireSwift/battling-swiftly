@@ -85,9 +85,18 @@ export const Help = ({
                 'drawColour',
                 e.target.value || initialOptions.drawColour,
               )
-            }>
+            }
+          >
             {Object.entries(customColorOptions).map(([key, value]) => {
-              return (<option value={value}>{key}</option>)
+              return (
+                <option
+                  key={key}
+                  value={value}
+                  style={{
+                    color: `${value}`
+                  }}
+                >{key}</option>
+              )
             })}
           </select>
         </li>
