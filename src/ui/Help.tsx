@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 
 import { cPrimary, cMenuBg } from '../styling/constants'
 import Options, { SetOption, initialOptions } from '../data/Options'
+import customColorOptions from "../graphics/customColorOptions";
 
 export const Help = ({
   show,
@@ -21,9 +22,9 @@ export const Help = ({
         top: '10%',
         left: '25%',
         width: '50%',
-        color: cPrimary,
+        color: options.drawColour,
         background: cMenuBg,
-        border: `1px solid ${cPrimary}`,
+        border: `1px solid ${options.drawColour}`,
         padding: '0 2rem',
         fontSize: 18,
       }}
@@ -34,9 +35,9 @@ export const Help = ({
           position: 'absolute',
           top: -1,
           right: -1,
-          border: `1px solid ${cPrimary}`,
+          border: `1px solid ${options.drawColour}`,
           background: 'none',
-          color: cPrimary,
+          color: options.drawColour,
           fontSize: 18,
           padding: '0.1rem',
         }}
@@ -51,8 +52,8 @@ export const Help = ({
             style={{
               margin: '1rem',
               background: 'black',
-              border: `1px solid ${cPrimary}`,
-              color: cPrimary,
+              border: `1px solid ${options.drawColour}`,
+              color: options.drawColour,
               fontFamily: 'monospace',
             }}
             type="number"
@@ -70,12 +71,12 @@ export const Help = ({
         </li>
         <li>
           Plotting colour
-          <input
+          <select
             style={{
               margin: '1rem',
               background: 'black',
-              border: `1px solid ${cPrimary}`,
-              color: cPrimary,
+              border: `1px solid ${options.drawColour}`,
+              color: options.drawColour,
               fontFamily: 'monospace',
             }}
             value={options.drawColour}
@@ -85,8 +86,21 @@ export const Help = ({
                 e.target.value || initialOptions.drawColour,
               )
             }
-            placeholder="CSS Colour"
-          />
+          >
+            {_.map(Object.entries(customColorOptions), ([key, value]) =>
+              (
+                <option
+                  key={key}
+                  value={value}
+                  style={{
+                    color: `${value}`
+                  }}
+                >
+                  {key}
+                </option>
+              )
+            )}
+          </select>
         </li>
       </ul>
     </div>
