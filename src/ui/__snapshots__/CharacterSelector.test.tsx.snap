@@ -4,7 +4,7 @@ exports[`the character selector matches the snapshot 1`] = `
 initialize {
   "0": Object {
     "attribs": Object {
-      "style": "position:fixed;background:black;color:lime;top:0;right:0",
+      "style": "position:fixed;background:black;color:lime;bottom:0;right:0",
     },
     "children": Array [
       Object {

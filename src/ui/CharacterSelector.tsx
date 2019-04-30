@@ -21,7 +21,7 @@ export const CharacterSelector = ({
       position: 'fixed',
       background: 'black',
       color: 'lime',
-      top: 0,
+      bottom: 0,
       right: 0,
     }}
   >
