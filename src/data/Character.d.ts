@@ -1,3 +1,12 @@
+export interface MarkerData {
+  key: string
+  name: string
+  position: { x: number; y: number }
+  color?: string
+  notes?: string[]
+  radius?: number
+}
+
 export type Character = {
   key: string
   name: string
@@ -6,4 +15,13 @@ export type Character = {
   notes?: string[]
 }
 
-export default Character
+export type Template = {
+  key: string
+  name: string
+  position: { x: number; y: number }
+  color?: string
+  notes: string[]
+  radius: number
+}
+
+export default MarkerData

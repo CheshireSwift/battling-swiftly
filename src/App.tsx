@@ -53,9 +53,7 @@ export const App = ({ store }: { store: Store }) => {
 
   const dpi = parseInt(query.values.dpi)
 
-  const collection = store.collection(query.values.collection)
-
-  const snapshot = useFirebase(collection)
+  const { snapshot, collection } = useFirebase(store, query.values.collection)
 
   if (!snapshot) {
     return <div>Could not find collection {query.values.collection}</div>

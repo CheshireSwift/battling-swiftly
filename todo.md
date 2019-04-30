@@ -15,3 +15,6 @@
 - [x] Neater looking measure?
 - [ ] Blast templates
 - [x] Notes array (aim, elevation, etc.)
+- [x] Persistent blast templates
+  - [ ] Persistent blast templates tests
+- [ ] Reposition close labels based on others nearby

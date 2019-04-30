@@ -1,4 +1,4 @@
-interface Document {
+export interface Document {
   id: string
   data: () => unknown
 }
@@ -7,11 +7,11 @@ interface DocRef {
   update: (data: any) => void
 }
 
-interface Snapshot {
+export interface Snapshot {
   docs: Document[]
 }
 
-interface CollectionRef {
+export interface CollectionRef {
   get: () => Promise<Snapshot>
   onSnapshot: (handler: (snapshot: Snapshot) => void) => () => void
   doc: (path: string) => DocRef

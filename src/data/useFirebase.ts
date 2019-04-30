@@ -1,17 +1,19 @@
 import * as React from 'react'
 
-export const useFirebase = <T extends any>(collectionRef: {
-  get: () => Promise<T>
-  onSnapshot: (handler: (snapshot: T) => void) => () => void
-}): T | undefined => {
-  const [snapshot, setSnapshot] = React.useState<T>()
-  React.useEffect(() => {
-    collectionRef.get().then(setSnapshot)
-    const cancelListener = collectionRef.onSnapshot(setSnapshot)
-    return cancelListener
-  }, [collectionRef])
+import { Snapshot, Store, CollectionRef } from '../data/Store'
 
-  return snapshot
+export const useFirebase = (
+  store: Store,
+  collectionName: string,
+): { snapshot: Snapshot | undefined; collection: CollectionRef } => {
+  const [snapshot, setSnapshot] = React.useState<Snapshot>()
+  const collection = store.collection(collectionName)
+  React.useEffect(() => {
+    collection.get().then(setSnapshot)
+    return collection.onSnapshot(setSnapshot)
+  }, [collectionName])
+
+  return { snapshot, collection }
 }
 
 export default useFirebase
