@@ -112,7 +112,7 @@ export const Drawing = ({
     setMenuPosition(Vector.fromEvent(e))
   }
 
-  const highlightedChildren = characters.map(character => (
+  const markers = _.sortBy(characters, 'radius').map(character => (
     <CharacterMarker
       key={character.key}
       character={character}
@@ -151,7 +151,7 @@ export const Drawing = ({
   return (
     <div onClick={toolClick} onContextMenu={menuClick}>
       <svg style={{ ...layerStyle, ...dimensions }}>
-        {highlightedChildren}
+        {markers}
         {plottingLine()}
       </svg>
       <PopupMenu
