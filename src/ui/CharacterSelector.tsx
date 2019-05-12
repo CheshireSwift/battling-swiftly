@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import Options from '../data/Options'
 
 import Character from '../data/Character'
 
@@ -15,12 +16,13 @@ export const CharacterSelector = ({
   availableKeys,
   selected,
   onSelect,
-}: CharacterSelectorProps) => (
-  <div
+}: CharacterSelectorProps) => {
+  const options = React.useContext(Options);
+  return <div
     style={{
       position: 'fixed',
       background: 'black',
-      color: 'lime',
+      color: options.drawColour,
       bottom: 0,
       right: 0,
     }}
@@ -31,7 +33,7 @@ export const CharacterSelector = ({
         key={key}
         style={{
           padding: '0.5rem',
-          border: key === selected ? '1px solid lime' : '1px solid black',
+          border: key === selected ? `1px solid ${options.drawColour}` : '1px solid black',
         }}
         onClick={() => onSelect(key)}
       >
@@ -39,6 +41,6 @@ export const CharacterSelector = ({
       </div>
     ))}
   </div>
-)
+}
 
 export default CharacterSelector

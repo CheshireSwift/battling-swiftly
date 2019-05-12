@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { useLocalStorage } from '../helpers/hooks'
 import queryStringData from '../helpers/queryStringData'
+import { cPrimary } from '../styling/constants'
 
 const query = queryStringData({
   valueKeys: ['draw'],
@@ -9,7 +10,7 @@ const query = queryStringData({
 
 export const initialOptions = {
   fixedScale: null as number | null,
-  drawColour: query.values.draw || 'lime',
+  drawColour: query.values.draw || cPrimary,
 }
 
 type GlobalOptions = typeof initialOptions
