@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { ignoreZoom } from '../helpers/styleSnippets'
-import { cMenuBg, cPrimary } from '../styling/constants'
+import { cMenuBg } from '../styling/constants'
+import Options from '../data/Options'
 
 type PopupMenuProps<T> = {
   position: { top: number; left: number } | null
@@ -10,8 +11,9 @@ type PopupMenuProps<T> = {
   onSelectItem?: (key: T) => void
 }
 
-export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
-  props.position ? (
+export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) => {
+  const options = React.useContext(Options)
+  return props.position ? (
     <div
       style={{
         position: 'absolute',
@@ -26,10 +28,10 @@ export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
           style={ignoreZoom({
             padding: 2,
             background: cMenuBg,
-            borderColor: cPrimary,
+            borderColor: options.drawColour,
             borderStyle: 'solid',
             borderWidth: props.selectedItem === key ? 1 : 0,
-            color: 'lime',
+            color: options.drawColour,
           })}
           onClick={e => {
             props.onSelectItem && props.onSelectItem(key)
@@ -41,5 +43,6 @@ export const PopupMenu = <T extends any>(props: PopupMenuProps<T>) =>
       ))}
     </div>
   ) : null
+}
 
 export default PopupMenu

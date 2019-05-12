@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { cPrimary, cMenuBg } from '../styling/constants'
+import { cMenuBg } from '../styling/constants'
 import Options, { SetOption, initialOptions } from '../data/Options'
 import customColorOptions from "../graphics/customColorOptions";
 
