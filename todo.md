@@ -18,3 +18,4 @@
 - [x] Persistent blast templates
   - [ ] Persistent blast templates tests
 - [ ] Reposition close labels based on others nearby
+- [ ] Character size (1" by default, larger/smaller radii to allow for imposing creatures, size/2 radius of handle circle point)
