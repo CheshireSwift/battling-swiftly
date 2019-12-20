@@ -1,7 +1,7 @@
 import * as React from 'react'
-
-import Vector from '../helpers/Vector'
+import { Circle, Line } from 'react-rough'
 import Options from '../data/Options'
+import Vector from '../helpers/Vector'
 
 type PlottingLineProps = {
   start: Vector
@@ -23,10 +23,10 @@ export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
 
   return (
     <>
-      <line {...start.suffix('1')} {...end.suffix('2')} {...shared} />
-      <circle
-        {...end.prefix('c')}
-        r={4 * scaleMultiplier}
+      <Line {...start.toLineStart()} {...end.toLineEnd()} {...shared} />
+      <Circle
+        {...end.toXY()}
+        diameter={4 * scaleMultiplier * 2}
         {...shared}
         fill="none"
       />
@@ -36,10 +36,7 @@ export const PlottingLine = ({ start, end, dpi }: PlottingLineProps) => {
         fontSize={fontSize}
         textAnchor="middle"
         dominantBaseline="middle"
-        style={{
-          fontFamily: 'monospace',
-          cursor: 'pointer',
-        }}
+        style={{ cursor: 'pointer' }}
       >
         <tspan dy={-fontSize / 2} style={{ fontWeight: 'bolder' }}>
           {(lineVector.length() / dpi).toFixed(1)}"

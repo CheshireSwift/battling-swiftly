@@ -1,8 +1,7 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
-
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import App from './App'
 
 // Initialize Firebase
@@ -18,5 +17,20 @@ const config = {
 firebase.initializeApp(config)
 
 const store = firebase.app().firestore()
+
+let randSeed = 0
+const haxRandom = Object.assign(
+  () => {
+    var x = Math.sin(randSeed++) * 10000
+    return x - Math.floor(x)
+  },
+  {
+    setSeed: (s: number) => {
+      randSeed = s
+    },
+  },
+)
+
+Math.random = haxRandom
 
 ReactDOM.render(<App store={store} />, document.getElementById('battlemap'))

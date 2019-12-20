@@ -1,7 +1,7 @@
-import * as React from 'react'
 import * as _ from 'lodash'
-
+import * as React from 'react'
 import Character from '../data/Character'
+import { cMenuBg, cPrimary } from '../styling/constants'
 
 export type CharacterSelectorProps = {
   characters: Character[]
@@ -19,8 +19,8 @@ export const CharacterSelector = ({
   <div
     style={{
       position: 'fixed',
-      background: 'black',
-      color: 'lime',
+      background: cMenuBg,
+      color: cPrimary,
       bottom: 0,
       right: 0,
     }}
@@ -31,7 +31,8 @@ export const CharacterSelector = ({
         key={key}
         style={{
           padding: '0.5rem',
-          border: key === selected ? '1px solid lime' : '1px solid black',
+          textDecoration: key === selected ? 'underline' : undefined,
+          // border: key === selected ? '1px solid black' : '1px solid wheat',
         }}
         onClick={() => onSelect(key)}
       >

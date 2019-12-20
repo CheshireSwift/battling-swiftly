@@ -1,15 +1,14 @@
-import * as React from 'react'
 import * as _ from 'lodash'
-
+import * as React from 'react'
+import Character from './data/Character'
+import Options, { useOptions } from './data/Options'
+import Store from './data/Store'
+import useFirebase from './data/useFirebase'
 import queryStringData from './helpers/queryStringData'
 import Background from './layers/Background'
 import Drawing from './layers/Drawing'
-import useFirebase from './data/useFirebase'
-import Help from './ui/Help'
-import Options, { useOptions } from './data/Options'
-import Character from './data/Character'
-import Store from './data/Store'
 import CharacterSelector from './ui/CharacterSelector'
+import Help from './ui/Help'
 
 // const colours = [
 //   palette.friendly,

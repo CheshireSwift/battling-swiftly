@@ -1,17 +1,18 @@
-import * as React from 'react'
 import * as _ from 'lodash'
-
-import { layerStyle } from '../helpers/styleSnippets'
-import { useEventValue } from '../helpers/hooks'
-import Vector from '../helpers/Vector'
-import PopupMenu from '../ui/PopupMenu'
+import * as React from 'react'
+import { ReactRough } from 'react-rough'
+import Character from '../data/Character'
 import Tool from '../data/Tool'
 import CharacterMarker from '../graphics/CharacterMarker'
 import PlottingLine from '../graphics/PlottingLine'
-import Character from '../data/Character'
+import { useEventValue } from '../helpers/hooks'
+import { layerStyle } from '../helpers/styleSnippets'
+import Vector from '../helpers/Vector'
+import PopupMenu from '../ui/PopupMenu'
 
+type Dimensions = { height: number; width: number }
 type DrawingProps = {
-  dimensions: { height: number; width: number }
+  dimensions: Dimensions
   dpi: number
   characters: Character[]
   controlledCharacterKey?: string
@@ -22,6 +23,94 @@ type DrawingProps = {
 const cappedDifference = (start: Vector, end: Vector, cap: number) =>
   start.difference(end).cap(cap)
 
+const DrawingCanvas = ({
+  dimensions,
+  dpi,
+  moveStart,
+  moveEnd,
+  movementCap,
+  selectedTool,
+  characters,
+  controlledCharacterKey,
+  controlledCharacterPosition,
+}: {
+  dimensions: Dimensions
+  dpi: number
+  moveStart: Vector | null
+  moveEnd: Vector | null
+  movementCap: number
+  selectedTool: Tool
+  characters: Character[]
+  controlledCharacterKey: string | undefined
+  controlledCharacterPosition: Vector | undefined
+}) => {
+  const mousePos = useEventValue<MouseEvent, Vector>(
+    'mousemove',
+    Vector.fromEvent,
+  )
+
+  const startToUse = {
+    [Tool.Measure]: moveStart,
+    [Tool.Move]: controlledCharacterPosition,
+  }[selectedTool]
+  const endToUse = moveEnd || mousePos
+
+  const markers = _.sortBy(characters, 'radius').map(character => (
+    <CharacterMarker
+      key={character.key}
+      character={character}
+      highlight={
+        selectedTool == Tool.Move && character.key === controlledCharacterKey
+      }
+      dpi={dpi}
+    />
+  ))
+
+  const plottingLine = () => {
+    if (!startToUse || !endToUse) {
+      return null
+    }
+
+    if (selectedTool === Tool.Measure) {
+      return <PlottingLine start={startToUse} end={endToUse} dpi={dpi} />
+    }
+
+    if (selectedTool === Tool.Move) {
+      const lineVector = startToUse.difference(endToUse)
+      const scaledLineVector = lineVector.cap(movementCap)
+
+      return (
+        <PlottingLine
+          start={startToUse}
+          end={startToUse.add(scaledLineVector)}
+          dpi={dpi}
+        />
+      )
+    }
+
+    return null
+  }
+  ;(Math.random as any).setSeed(123)
+  return (
+    <div style={{ ...layerStyle }}>
+      <ReactRough
+        renderer="svg"
+        {...dimensions}
+        config={{
+          options: {
+            bowing: 0.5,
+            roughness: 0.5,
+            fillStyle: 'zigzag',
+            fillWeight: 1,
+          },
+        }}
+      >
+        {markers}
+        {plottingLine()}
+      </ReactRough>
+    </div>
+  )
+}
 export const Drawing = ({
   dimensions,
   dpi,
@@ -35,27 +124,13 @@ export const Drawing = ({
   const [moveEnd, setMoveEnd] = React.useState<Vector | null>(null)
   const [menuPosition, setMenuPosition] = React.useState<Vector | null>(null)
   const [selectedTool, setSelectedTool] = React.useState(Tool.Measure)
-  const mousePos = useEventValue<MouseEvent, Vector>(
-    'mousemove',
-    Vector.fromEvent,
-  )
-  const controlledCharacterPosition = () => {
-    const controlledCharacter = _.find(characters, {
-      key: controlledCharacterKey,
-    })
-    if (!controlledCharacter) {
-      return
-    }
 
-    return Vector.fromXY(controlledCharacter.position)
-  }
+  const controlledCharacter = _.find(characters, {
+    key: controlledCharacterKey,
+  })
 
-  const startToUse = {
-    [Tool.Measure]: moveStart,
-    [Tool.Move]: controlledCharacterPosition(),
-  }[selectedTool]
-
-  const endToUse = moveEnd || mousePos
+  const controlledCharacterPosition =
+    controlledCharacter && Vector.fromXY(controlledCharacter.position)
 
   const measureHandler = (e: React.MouseEvent): void => {
     const point = Vector.fromEvent(e)
@@ -68,12 +143,15 @@ export const Drawing = ({
   }
 
   const moveHandler = (e: React.MouseEvent): void => {
-    const position = controlledCharacterPosition()
     controlledCharacterKey &&
-      position &&
+      controlledCharacterPosition &&
       update(controlledCharacterKey, {
-        position: cappedDifference(position, Vector.fromEvent(e), movementCap)
-          .add(position)
+        position: cappedDifference(
+          controlledCharacterPosition,
+          Vector.fromEvent(e),
+          movementCap,
+        )
+          .add(controlledCharacterPosition)
           .toXY(),
       })
 
@@ -112,48 +190,21 @@ export const Drawing = ({
     setMenuPosition(Vector.fromEvent(e))
   }
 
-  const markers = _.sortBy(characters, 'radius').map(character => (
-    <CharacterMarker
-      key={character.key}
-      character={character}
-      highlight={
-        selectedTool == Tool.Move && character.key === controlledCharacterKey
-      }
-      dpi={dpi}
-    />
-  ))
-
-  const plottingLine = () => {
-    if (!startToUse || !endToUse) {
-      return null
-    }
-
-    if (selectedTool === Tool.Measure) {
-      return <PlottingLine start={startToUse} end={endToUse} dpi={dpi} />
-    }
-
-    if (selectedTool === Tool.Move) {
-      const lineVector = startToUse.difference(endToUse)
-      const scaledLineVector = lineVector.cap(movementCap)
-
-      return (
-        <PlottingLine
-          start={startToUse}
-          end={startToUse.add(scaledLineVector)}
-          dpi={dpi}
-        />
-      )
-    }
-
-    return null
-  }
-
   return (
     <div onClick={toolClick} onContextMenu={menuClick}>
-      <svg style={{ ...layerStyle, ...dimensions }}>
-        {markers}
-        {plottingLine()}
-      </svg>
+      <DrawingCanvas
+        {...{
+          dimensions,
+          dpi,
+          characters,
+          controlledCharacterKey,
+          controlledCharacterPosition,
+          moveStart,
+          moveEnd,
+          movementCap,
+          selectedTool,
+        }}
+      />
       <PopupMenu
         position={menuPosition ? menuPosition.toStyle() : null}
         menuItems={[

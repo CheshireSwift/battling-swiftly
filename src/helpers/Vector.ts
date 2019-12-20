@@ -72,6 +72,14 @@ export class Vector {
       ['y' + suffix]: this.y,
     }
   }
+
+  toLineStart(): { x1: number; y1: number } {
+    return this.suffix('1') as { x1: number; y1: number }
+  }
+
+  toLineEnd(): { x2: number; y2: number } {
+    return this.suffix('2') as { x2: number; y2: number }
+  }
 }
 
 export default Vector

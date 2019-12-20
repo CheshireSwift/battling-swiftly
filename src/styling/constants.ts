@@ -1,2 +1,2 @@
-export const cMenuBg = '#000000dd'
-export const cPrimary = 'lime'
+export const cMenuBg = 'wheat'
+export const cPrimary = 'maroon'

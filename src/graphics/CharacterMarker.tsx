@@ -1,9 +1,9 @@
-import * as React from 'react'
 import * as _ from 'lodash'
-
-import Vector from '../helpers/Vector'
-import Options from '../data/Options'
+import * as React from 'react'
+import ReactRough, { Circle, Path, Rectangle } from 'react-rough'
 import MarkerData from '../data/Character'
+import Options from '../data/Options'
+import Vector from '../helpers/Vector'
 
 export const CharacterMarker = ({
   character,
@@ -30,106 +30,114 @@ export const CharacterMarker = ({
   const position = Vector.fromXY(character.position)
   const offsetPosition = character.radius
     ? position
-    : position.add(new Vector(15, -15).multiply(1 * sizeMultiplier))
+    : position.add(new Vector(20, -20).multiply(1 * sizeMultiplier))
   const color = character.color || drawColour
 
   const radiusCircles = character.radius ? (
-    <circle
-      {...position.prefix('c')}
-      r={character.radius * dpi}
+    <Circle
+      // {...position.prefix('c')}
+      {...position.toXY()}
+      diameter={character.radius * dpi * 2}
       stroke={color}
       strokeWidth={0.5 * sizeMultiplier}
       fill={color}
-      fillOpacity='0.3'
+      fillWeight={0.5}
     />
   ) : (
     (highlight || hover) && (
       <>
-        <circle
-          {...position.prefix('c')}
-          r={6 * dpi}
+        <Circle
+          {...position.toXY()}
+          diameter={6 * dpi * 2}
           stroke={color}
           strokeWidth={1.5 * sizeMultiplier}
           fill={color}
-          fillOpacity='0.1'
         />
-        <circle
-          {...position.prefix('c')}
-          r={1 * dpi}
+        <Circle
+          {...position.toXY()}
+          diameter={1 * dpi * 2}
           stroke={color}
           strokeWidth={0.5 * sizeMultiplier}
           fill={color}
-          fillOpacity='0.2'
+          fillStyle="cross-hatch"
         />
-        <circle
-          {...position.prefix('c')}
-          r={7 * dpi}
+        <Circle
+          {...position.toXY()}
+          diameter={7 * dpi * 2}
           stroke={color}
-          strokeDasharray='10'
+          // strokeDasharray="10"
           strokeWidth={0.5 * sizeMultiplier}
-          fill='none'
+          fill="none"
         />
       </>
     )
   )
 
   const handleBarHeight = offsetPosition.y + 2 * sizeMultiplier
-  const handleBarLength = character.name.length * 6 * sizeMultiplier
+  const handleBarLength = character.name.length * 8 * sizeMultiplier
   const mapHandle = (
     <>
-      <circle
-        {...position.prefix('c')}
-        r={4 * sizeMultiplier}
+      <Circle
+        {...position.toXY()}
+        diameter={2 * sizeMultiplier * 2}
         stroke={color}
         strokeWidth={1.5 * sizeMultiplier}
         fill={color}
-        fillOpacity='0.1'
         {...hoverHandlers}
+        roughness={0.3}
       />
-      <path
+      <Path
         stroke={color}
         strokeWidth={1.5 * sizeMultiplier}
-        fill='none'
+        fill="none"
         d={`
-M ${position.x + 2 * sizeMultiplier},${position.y - 2 * sizeMultiplier}
+M ${position.x + sizeMultiplier},${position.y - sizeMultiplier}
 L ${offsetPosition.x},${handleBarHeight}
 L ${offsetPosition.x + handleBarLength},${handleBarHeight}
     `}
+        roughness={1.5}
       />
     </>
   )
 
   const fontSize = 14 * sizeMultiplier
   const nameText = (
-    <text
-      {...offsetPosition}
-      fill={color}
-      style={{
-        fontFamily: 'monospace',
-        fontWeight: 'bold',
-        fontSize,
-      }}
-      {...hoverHandlers}
-    >
-      {character.name}
-    </text>
+    <>
+      <ReactRough renderer="svg" width={1000} height={1000}>
+        <Rectangle
+          x={100}
+          y={200}
+          width={100}
+          height={200}
+          stroke="none"
+          fill="wheat"
+        />
+      </ReactRough>
+      <text
+        {...offsetPosition}
+        fill={color}
+        style={{
+          fontWeight: 'bold',
+          fontSize,
+          zIndex: 999,
+        }}
+        {...hoverHandlers}
+      >
+        {character.name}
+      </text>
+    </>
   )
 
   const notesText = (
-    <text
-      {...offsetPosition}
-      fill={color}
-      style={{
-        fontFamily: 'monospace',
-        fontSize,
-      }}
-    >
+    <text {...offsetPosition} fill={color} style={{ fontSize, zIndex: 999 }}>
       {character.notes &&
         (highlight || hover ? (
           character.notes.map(note => (
-            <tspan x={offsetPosition.x} dy={fontSize}>
-              {note}
-            </tspan>
+            <>
+              <tspan x={offsetPosition.x} dy={fontSize}>
+                {note}
+              </tspan>
+            </>
           ))
         ) : (
           <tspan x={offsetPosition.x} dy={fontSize}>

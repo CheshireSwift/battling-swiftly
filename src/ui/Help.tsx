@@ -1,9 +1,8 @@
-import * as React from 'react'
 import * as _ from 'lodash'
-
-import { cPrimary, cMenuBg } from '../styling/constants'
-import Options, { SetOption, initialOptions } from '../data/Options'
-import customColorOptions from "../graphics/customColorOptions";
+import * as React from 'react'
+import Options, { initialOptions, SetOption } from '../data/Options'
+import customColorOptions from '../graphics/customColorOptions'
+import { cMenuBg } from '../styling/constants'
 
 export const Help = ({
   show,
@@ -51,7 +50,7 @@ export const Help = ({
           <input
             style={{
               margin: '1rem',
-              background: 'black',
+              background: cMenuBg,
               border: `1px solid ${options.drawColour}`,
               color: options.drawColour,
               fontFamily: 'monospace',
@@ -74,7 +73,7 @@ export const Help = ({
           <select
             style={{
               margin: '1rem',
-              background: 'black',
+              background: cMenuBg,
               border: `1px solid ${options.drawColour}`,
               color: options.drawColour,
               fontFamily: 'monospace',
@@ -87,19 +86,17 @@ export const Help = ({
               )
             }
           >
-            {_.map(Object.entries(customColorOptions), ([key, value]) =>
-              (
-                <option
-                  key={key}
-                  value={value}
-                  style={{
-                    color: `${value}`
-                  }}
-                >
-                  {key}
-                </option>
-              )
-            )}
+            {_.map(Object.entries(customColorOptions), ([key, value]) => (
+              <option
+                key={key}
+                value={value}
+                style={{
+                  color: `${value}`,
+                }}
+              >
+                {key}
+              </option>
+            ))}
           </select>
         </li>
       </ul>

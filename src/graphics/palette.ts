@@ -1,6 +1,6 @@
 export default {
-  friendly: 'lime',
-  hostile: 'orange',
-  unknown: 'cyan',
+  friendly: 'green',
+  hostile: 'red',
+  unknown: 'blue',
   neutral: 'yellow',
 }
